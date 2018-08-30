@@ -17,7 +17,7 @@
     "autoload": {
         "psr-4": {
             "Sioweb\\CCEvent\\": "src/"
-        },
+        }
     },
     "extra": {
         "class": "Sioweb\\CCEvent\\Composer\\Plugin"

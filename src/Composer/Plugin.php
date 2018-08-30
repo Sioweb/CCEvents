@@ -19,6 +19,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             // 'post-install-cmd' => 'installOrUpdate',
             // 'post-update-cmd' => 'installOrUpdate',
             'post-package-install' => 'installOrUpdate',
+            'post-package-update' => 'installOrUpdate',
         );
     }
     

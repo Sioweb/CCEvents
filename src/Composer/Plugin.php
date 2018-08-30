@@ -16,8 +16,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'post-install-cmd' => 'installOrUpdate',
-            'post-update-cmd' => 'installOrUpdate',
+            // 'post-install-cmd' => 'installOrUpdate',
+            // 'post-update-cmd' => 'installOrUpdate',
+            'post-package-install' => 'installOrUpdate',
         );
     }
     

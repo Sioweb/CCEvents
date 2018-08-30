@@ -1,6 +1,6 @@
 <?php
 
-namespace Sioweb\CCEvent\Plugin;
+namespace Sioweb\CCEvent\Composer;
 
 use Composer\Composer;
 use Composer\IO\IOInterface;

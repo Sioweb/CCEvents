@@ -10,7 +10,12 @@ use Composer\Package\Dumper\ArrayDumper;
 use Composer\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Composer\EventDispatcher\EventDispatcher;
-use Composer\Script\PackageEvent;
+use Sioweb\CCEvent\Composer\Script\PackageEvent;
+
+use Symfony\Component\Console\Input\StringInput;
+use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
@@ -56,9 +61,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         // echo "\t\t- getVendorPath: ".$event->getComposer()->getConfig()->get('vendor-dir')."\n";
         // echo "\t\t- ArrayDump: ".print_r($Dumper->dump($package),1)."\n";
 
+
         $ComposerJson = $event->getComposer()->getConfig()->get('vendor-dir').'/'.$package->getName().'/composer.json';
         if(is_file($ComposerJson)) {
             $Scripts = [];
+            $Arguments = [];
             $ComposerArray = json_decode(file_get_contents($ComposerJson), 1);
             if(!empty($ComposerArray['scripts']['post-'.$Type.'-contao'])) {
                 $Scripts = $ComposerArray['scripts']['post-'.$Type.'-contao'];
@@ -67,11 +74,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             }
 
             foreach($Scripts as $script) {
+                $Arguments = array_merge($Arguments, $this->parseArguments($Arguments, $script, $event));
                 $EventDispatcher->addListener('post-'.$Type.'-contao', $script);
             }
             
             // $EventDispatcher->dispatch('post-'.$Type.'-contao', new PackageEvent($eventName, $event->getComposer(), $event->getIO(), $devMode, $policy, $pool, $installedRepo, $request, $operations, $operation));
-            $EventDispatcher->dispatch('post-'.$Type.'-contao', new PackageEvent(
+            $PackageEvent = new PackageEvent(
                 'post-'.$Type.'-contao',
                 $event->getComposer(),
                 $event->getIO(),
@@ -82,11 +90,33 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                 $event->getRequest(),
                 $event->getOperations(),
                 $event->getOperation()
-            ));
+            );
+
+            $PackageEvent->setArguments($Arguments);
+
+            $EventDispatcher->dispatch('post-'.$Type.'-contao', $PackageEvents);
             
             // echo "\t\t- composer.json?: ".($event->getComposer()->getConfig()->get('vendor-dir').'/'.$package->getName().'/composer.json')."\n";
             // echo "\t\t- is_file: ".is_file($event->getComposer()->getConfig()->get('vendor-dir').'/'.$package->getName().'/composer.json')."\n";
             // echo "\t\t".'PLUGIN: '.$package->getName().', method: '.__METHOD__.', class: '.get_class($event).', name: '.$event->getName()."\n";                   
+        }
+    }
+
+    private function parseArguments($Arguments = [], $script, $event) {
+        
+        if(!strpos($ClassData, '::')) {
+            return [];
+        }
+
+        $_script = explode(' ', $script);
+        $script = array_shift($_script);
+
+        $ClassData = explode('::', $script);
+        if(method_exists($ClassData[0], 'getDefinition')) {
+            $Definition = $ClassData[0]::$methodName($event);
+            $Input = new StringInput(implode(' ', $_script));
+            $Input->bind($Definition);
+            return $Input->getOptions();
         }
     }
 }

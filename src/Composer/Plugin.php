@@ -25,6 +25,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     
     public function installOrUpdate($event)
     {
-        echo 'PLUGIN: method: '.__METHOD__.', class: '.get_class($event).', name: '.$event->getName();                   
+        echo 'PLUGIN: method: '.__METHOD__.', class: '.get_class($event).', name: '.$event->getName()."\n";                   
     }
 }

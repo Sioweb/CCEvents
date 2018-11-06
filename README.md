@@ -22,6 +22,14 @@ Meine Module liegen alle in einem privaten Repository, welches sich immer dann a
             "ls -la"
         ],
     }
+ 
+### Argumente übergeben
+
+Es ist zwar unüblich, allerdings können den aufgerufenen Klassen Argumente übergeben werden. Dazu einfach wie folgt notieren in der composer.json:
+
+    Your\\Vendor\\Composer\\ScriptHandler::install --ein-argument=foo --noch-eins=test
+    
+Die Argumente werden dann als Array übergeben und können dann wie in der unteren [Beispiel-Erweiterung](https://github.com/Sioweb/CCEventsExample) in ein besser nutzbares Array umformatiert werden. 
 
 ## Gibt es ein Beispiel?
 

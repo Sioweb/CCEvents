@@ -21,13 +21,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'post-package-install' => 'installAndUpdate',
-            'post-package-update' => 'installAndUpdate',
-            'post-update-cmd' => 'update',
+            'post-package-install' => 'registratePackageScripts',
+            'post-package-update' => 'registratePackageScripts',
+            'post-install-cmd' => 'runPackageScripts',
+            'post-update-cmd' => 'runPackageScripts',
         );
     }
 
-    public function update($event)
+    public function runPackageScripts($event)
     {
         foreach($this->scripts as $Script => $CcEvent) {
             $event->getComposer()->getEventDispatcher()->addListener('package-scripts[' . $Script . ']', $CcEvent->getScript());
@@ -35,7 +36,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         }
     }
 
-    public function installAndUpdate($event)
+    public function registratePackageScripts($event)
     {
 
         $operation = $event->getOperation();

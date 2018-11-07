@@ -23,8 +23,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         return array(
             'post-package-install' => 'registratePackageScripts',
             'post-package-update' => 'registratePackageScripts',
-            'post-install-cmd' => 'runPackageScripts',
-            'post-update-cmd' => 'runPackageScripts',
+            'post-install-cmd' => ['runPackageScripts', -999],
+            'post-update-cmd' => ['runPackageScripts', -999],
         );
     }
 

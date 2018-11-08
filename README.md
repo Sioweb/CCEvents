@@ -17,8 +17,8 @@ Meine Module liegen alle in einem privaten Repository, welches sich immer dann a
 *composer.json*
 
     "scripts": {
-        "post-install-contao": [
-            "Your\\Vendor\\Composer\\ScriptHandler::install"
+        "package-scripts": [
+            "Your\\Vendor\\Composer\\CLASS_NAME::CLASS_METHOD"
             "ls -la"
         ],
     }
@@ -38,3 +38,27 @@ Na klar, https://github.com/Sioweb/CCEventsExample ist ein fertiges Contao-Modul
     composer req sioweb/cceventsexample
 
 **Hinweis:** Die Ausgabe ist sehr lang und leicht chaotisch. Am besten wird die Ausgabe in einen Editor kopiert. Alle Funktionsausgaben sind mit zwei Tabs eingerückt und beginnen mit einem Minus (-)
+
+## Können Scripte auch nur auf "localhost" oder "dev" beschränkt werden?
+
+Ja. CCEvent geht alle Scripts der Reihe nach durch und prüft ob diese eine Art IF-Condition enthalten. Ist die Condition falsch, werden alle nachfolgenden Scripts ignoriert. Um ein Script als Condition zu markieren, muss es nach folgendem Muster aufgebaut werden: 
+
+    @config.PARAMETER_NAME == 1
+    @config.PARAMETER_NAME == true // wird später in 1 umgewandelt
+    @config.PARAMETER_NAME >= 1 && config.PARAMETER_NAME <= 10 // Das zweite config benötigt kein @
+    @config.PARAMETER_NAME == localhost
+
+Unterstützt werden die Operatoren [>, <, >=, <=, ==, !=].
+
+Die Conditions können mehrfach genutzt werden:
+
+    "scripts": {
+        "package-scripts": [
+            "@config.PARAMETER_NAME > 10",
+            "Your\\Vendor\\Composer\\CLASS_NAME::CLASS_METHOD"
+            "@config.PARAMETER_NAME < 20",
+            "ls -la"
+        ],
+    }
+    
+**Anmerkung:** Die Condition zieht sich die Daten aus der Composer `config.json`. Geplant ist, in Zukunft auch eine Environment-Variable prüfen zu können: `@environment.PARAMETER_NAME`. 

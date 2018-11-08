@@ -63,4 +63,19 @@ Die Conditions können mehrfach genutzt werden:
         ],
     }
     
-**Anmerkung:** Die Condition zieht sich die Daten aus der Composer `config.json`. Geplant ist, in Zukunft auch eine Environment-Variable prüfen zu können: `@environment.PARAMETER_NAME`. 
+**Anmerkung:** Die Condition zieht sich die Daten aus der Composer `config.json`. Geplant ist, in Zukunft auch eine Environment-Variable prüfen zu können: `@environment.PARAMETER_NAME`.
+
+### Config.json
+
+Die Datei liegt unter `$COMPOSER_HOME/config.json`, oder muss zumindest dort angelegt werden. Dort können nun Parameter notiert werden, welche in den Conditions verwendet werden sollen.
+
+*Beispiel*
+   
+    {
+        "config": {
+            "localhost": true,
+            "whatEnvironmentIsThis": "localhost"
+            "WhatEver": 10
+        }
+    }
+

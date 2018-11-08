@@ -6,7 +6,9 @@ Es ist nun möglich, bei der Installation einmalig eine Funktion auszuführen. B
 
 ## Warum?
 
-Meine Module liegen alle in einem privaten Repository, welches sich immer dann aktualisiert, wenn ich einen neuen Git-Tag pushe. Dadurch sind alle meine Plugins sauber installierbar, versioniert und sind überall erreichbar. Damit ich diese auch leicht entwickeln kann, brauche ich eine Funktion die mir in allen Plugins das Git-Repo installieren. So kann ich im Vendor-Verzeichnis arbeiten und danach ohne viel Aufwand in mein privates Repo pushen.
+Meine Module liegen alle in einem privaten Repository, welches sich immer dann aktualisiert, wenn ich einen neuen Git-Tag pushe. Dadurch sind alle meine Plugins sauber installierbar, versioniert und von überall erreichbar. Damit ich diese auch leicht weiterentwickeln kann, brauche ich eine Funktion die mir in allen Plugins das Git-Repo installieren. So kann ich im Vendor-Verzeichnis arbeiten und danach ohne viel Aufwand in mein privates Repo pushen.
+
+Kurz, mit diesem Plugin, in Verbindung mit [Apply Environment für Contao](https://github.com/Sioweb/ApplyEnvironment), kann ich bequem im Vendor-Verzeichnis arbeiten.
 
 ## How to use?
 

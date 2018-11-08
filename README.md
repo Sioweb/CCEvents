@@ -78,4 +78,8 @@ Die Datei liegt unter `$COMPOSER_HOME/config.json`, oder muss zumindest dort ang
             "WhatEver": 10
         }
     }
+    
+*Script Beispiel*
+
+    @config.localhost == 1 && config.whatEnvironmentIsThis == "localhost" && config.WhatEver > 5
 

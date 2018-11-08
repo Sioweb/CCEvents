@@ -1,7 +1,7 @@
 {
     "name": "sioweb/ccevent",
     "type": "composer-plugin",
-    "description": "Composer event handler for Contao 4.4+; Run console task right after installer (post-[update|install]-cmd) is done.",
+    "description": "Composer plugin event handler, run plugin scripts right after installer (post-[update|install]-cmd) is done.",
     "license": "LGPL-3.0+",
     "authors": [
         {

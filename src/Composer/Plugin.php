@@ -38,7 +38,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
     public function registratePackageScripts($event)
     {
-
         $operation = $event->getOperation();
 
         $package = method_exists($operation, 'getPackage')
@@ -60,7 +59,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                 return;
             }
 
+            $Config = $event->getComposer()->getConfig();
             foreach ($Scripts as $script) {
+                if(strpos($script, '@config') !== false) {
+                    if(!$this->checkCondition($script, $Config)) {
+                        break;
+                    }
+                    continue;
+                }
                 $_script = $script;
                 $arguments = $this->parseArguments($Arguments, $script, $event);
 
@@ -82,6 +88,63 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                 $this->scripts[$_script] = $CcEvent;
             }
         }
+    }
+
+    private function checkCondition($script, $Config) {
+        $arrScript = preg_split('|\s*&&\s*|', $script);
+    
+        $arrConditions = [];
+        foreach($arrScript as $condition) {
+            $_condition = preg_split('|\s*([\!\=\>\<]{2})\s*|', $condition, -1, PREG_SPLIT_DELIM_CAPTURE);
+            $arrConditions[preg_replace('|@*config\.|', '', $_condition[0])] = array_slice($_condition, 1);
+        }
+
+        foreach($arrConditions as $configKey => $value) {
+            $configValue = $Config->get($configKey);
+            if($value[1] === 'true') {
+                $value[1] = 1;
+            }
+            if($value[1] === 'false') {
+                $value[1] = 0;
+            }
+            if(empty($configValue)) {
+                $configValue == 0;
+            }
+            switch($value[0]) {
+                case '==':
+                    if($configValue != $value[1]) {
+                        return false;
+                    }
+                break;
+                case '!=':
+                    if($configValue == $value[1]) {
+                        return false;
+                    }
+                break;
+                case '<':
+                    if($configValue > $value[1]) {
+                        return false;
+                    }
+                break;
+                case '<=':
+                    if($configValue >= $value[1]) {
+                        return false;
+                    }
+                break;
+                case '>':
+                    if($configValue < $value[1]) {
+                        return false;
+                    }
+                break;
+                case '>=':
+                    if($configValue <= $value[1]) {
+                        return false;
+                    }
+                break;
+            }
+        }
+
+        return true;
     }
 
     private function parseArguments($Arguments = [], &$script, $event)

@@ -48,7 +48,7 @@ Ja. CCEvent geht alle Scripts der Reihe nach durch und prüft ob diese eine Art 
     @config.PARAMETER_NAME >= 1 && config.PARAMETER_NAME <= 10 // Das zweite config benötigt kein @
     @config.PARAMETER_NAME == localhost
 
-Unterstützt werden die Operatoren [>, <, >=, <=, ==, !=].
+Unterstützt werden die Operatoren `[>, <, >=, <=, ==, !=]`
 
 Die Conditions können mehrfach genutzt werden:
 

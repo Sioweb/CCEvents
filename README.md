@@ -63,7 +63,7 @@ Die Conditions können mehrfach genutzt werden:
         ],
     }
     
-**Anmerkung:** Die Condition zieht sich die Daten aus der Composer `config.json`. Geplant ist, in Zukunft auch eine Environment-Variable prüfen zu können: `@environment.PARAMETER_NAME`.
+**Anmerkung:** Die Condition zieht sich die Daten aus der Composer `config.json`. Geplant ist, in Zukunft auch eine Environment-Variable prüfen zu können: `@environment.PARAMETER_NAME`. Verschachtelungen wie `@config.extra.PARAMETER_NAME` sind ebenfalls noch nicht möglich.
 
 ### Config.json
 

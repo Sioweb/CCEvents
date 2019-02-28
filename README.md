@@ -1,4 +1,4 @@
-# CCEvent (Contao Composer Events)
+# CCEvent (<del>Contao</del> Composer Events)
 
 Dieses Modul lässt Module nach der Installation und nach dem Update ausführen. Das kann vor allem in Entwicklungsumgebungen sinnvoll sein, um direkt nach der Installation ein Git-Repo einzurichten, um Vendor-Module zu bearbeiten.
 

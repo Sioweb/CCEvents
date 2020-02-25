@@ -74,7 +74,7 @@ Die Datei liegt unter `$COMPOSER_HOME/config.json`, oder muss zumindest dort ang
     {
         "config": {
             "localhost": true,
-            "whatEnvironmentIsThis": "localhost"
+            "whatEnvironmentIsThis": "localhost",
             "WhatEver": 10
         }
     }

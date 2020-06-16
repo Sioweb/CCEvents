@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  oxid.ccevent.packagescript:
+    class: Sioweb\CCEvent\Command\RunPackageScript
+    tags:
+      - { name: 'console.command', command: 'ccevent:packagescripts', description: 'Execute scripts of a explicit package.' }
+    bind:
+      $projectDir: '%kernel.project_dir%'
+    public: true

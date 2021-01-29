@@ -76,7 +76,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                     continue;
                 }
                 $_script = $script;
-                $arguments = $this->parseArguments($Arguments, $script, $event);
+                $arguments = $this->parseArguments($script, $event, $Arguments);
 
                 $CcEvent = new PackageEvent(
                     'package-scripts['.$_script.']',
@@ -155,7 +155,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         return true;
     }
 
-    private function parseArguments($Arguments = [], &$script, $event)
+    private function parseArguments(&$script, $event, $Arguments = [])
     {
         $_script = explode(' ', $script);
         $script = array_shift($_script);

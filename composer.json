@@ -1,5 +1,6 @@
 {
     "name": "sioweb/ccevent",
+    "version": "999.999.0",
     "type": "composer-plugin",
     "description": "Composer plugin event handler, run plugin scripts right after installer (post-[update|install]-cmd) is done.",
     "license": "LGPL-3.0+",

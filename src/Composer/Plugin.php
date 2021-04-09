@@ -3,6 +3,7 @@
 namespace Sioweb\CCEvent\Composer;
 
 use Composer\Composer;
+use Composer\Installer\PackageEvent as ComposerPackageEvent;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
 use Composer\Package\Dumper\ArrayDumper;
@@ -44,9 +45,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         }
     }
 
-    public function registratePackageScripts($event)
+    public function registratePackageScripts(ComposerPackageEvent $event)
     {
         $operation = $event->getOperation();
+
+        // die('<pre>' . __METHOD__ . ":\n" . print_r(get_class_methods($event), true) . "\n#################################\n\n" . '</pre>');
 
         $package = method_exists($operation, 'getPackage')
         ? $operation->getPackage()
@@ -83,10 +86,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                     $event->getComposer(),
                     $event->getIO(),
                     $event->isDevMode(),
-                    $event->getPolicy(),
-                    $event->getPool(),
-                    $event->getInstalledRepo(),
-                    $event->getRequest(),
+                    $event->getLocalRepo(),
                     $event->getOperations(),
                     $event->getOperation()
                 );
